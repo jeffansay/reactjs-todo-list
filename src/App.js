@@ -20,19 +20,24 @@ class App extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
 
-    const newItem = {
-      id: this.state.id,
-      title: this.state.item
+    if(this.state.item !== ""){
+      const newItem = {
+        id: this.state.id,
+        title: this.state.item
+      }
+  
+      const updateItems = [...this.state.items, newItem]
+  
+      this.setState({
+        items: updateItems,
+        item: '',
+        id: uuid(),
+        editItem: false
+      })
+    } else {
+      alert("Please Input something!")
     }
-
-    const updateItems = [...this.state.items, newItem]
-
-    this.setState({
-      items: updateItems,
-      item: '',
-      id: uuid(),
-      editItem: false
-    })
+  
   }
   handleDelete = (id) => {
     console.log(`handle delete ${id}`)
@@ -52,7 +57,7 @@ class App extends Component {
               <div className="col-10 mx-auto col-md-8 mt-4">
                   <h3 className="text-capitalize text-center">Todo Input</h3>
                   <TodoInput item={this.state.item} handleChange={this.handleChange} handleSubmit={this.handleSubmit} editItem={this.state.editItem}/>
-                  <TodoList items={this.state.item} clearList={this.clearList} handleDelete={this.handleDelete} handleEdit={this.handleEdit}/>
+                  <TodoList items={this.state.items} clearList={this.clearList} handleDelete={this.handleDelete} handleEdit={this.handleEdit}/>
               </div>
           </div>
         </div>
