@@ -20,7 +20,6 @@ class App extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
 
-    if(this.state.item !== ""){
       const newItem = {
         id: this.state.id,
         title: this.state.item
@@ -34,10 +33,7 @@ class App extends Component {
         id: uuid(),
         editItem: false
       })
-    } else {
-      alert("Please Input something!")
-    }
-  
+
   }
   handleDelete = (id) => {
       const filteredItem = this.state.items.filter(item => item.id !== id)
@@ -46,7 +42,16 @@ class App extends Component {
       })
   }
   handleEdit = (id) => {
-    console.log(`handle edit ${id}`)
+    const filteredItem = this.state.items.filter(item => item.id !== id)
+    const selectedItem = this.state.items.find(item => item.id === id)
+
+    console.log(selectedItem)
+    this.setState({
+      items: filteredItem,
+      item: selectedItem.title,
+      id: id,
+      editItem: true
+    })
   }
   clearList = (e) => {
     this.setState({
@@ -55,7 +60,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className="container">
           <div className="row">
